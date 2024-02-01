@@ -1,0 +1,98 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketMail</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container-fluid {
+            padding-right: 0;
+            padding-left: 0;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .header {
+            background-color: #000000;
+            padding: 20px;
+        }
+
+        .header .logo {
+            margin-right: 50px;
+        }
+
+        .header .nav-link {
+            margin-right: 10px;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer ul.nav {
+            justify-content: center;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer ul.nav li {
+            margin-right: 10px;
+        }
+
+        .footer p.text-body-secondary {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="b-example-divider"></div>
+
+        <header class="header">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-start">
+                    <a href="/" class="logo d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                        <h3 class="text-white">RocketMail</h3>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="{% url 'main:home' %}" class="nav-link btn px-2">Главная</a></li>
+                        <li><a href="#" class="nav-link btn px-2">Мои рассылки</a></li>
+                        <li><a href="#" class="nav-link btn px-2">Аналитика</a></li>
+                        <li><a href="#" class="nav-link btn px-2">Создать рассылку</a></li>
+                        <li><a href="{% url 'customers:list' %}" class="nav-link btn px-2">Клиенты</a></li>
+                    </ul>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-success me-2">Войти</button>
+                        <button type="button" class="btn btn-warning">Регистрация</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="container">
+            <footer class="py-3 my-4">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"><a href="{% url 'main:home' %}" class="nav-link px-2 text-body-secondary">Главная</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Наш блог</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Цены</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQ</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">О нас</a></li>
+                </ul>
+                <p class="text-center text-body-secondary">&copy; 2024 RocketMail, Inc</p>
+            </footer>
+        </div>
+
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    </div>
+</body>
+</html>

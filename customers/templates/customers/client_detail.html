@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="mb-4">
+    <h1 class="text-center">Клиент</h1>
+  </div>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td class="bg-light"><strong>Почта:</strong></td>
+        <td class="pl-3">{{ object.client_email }}</td>
+      </tr>
+      <tr>
+        <td class="bg-light"><strong>Фамилия:</strong></td>
+        <td class="pl-3">{{ object.last_name }}</td>
+      </tr>
+      <tr>
+        <td class="bg-light"><strong>Имя:</strong></td>
+        <td class="pl-3">{{ object.first_name }}</td>
+      </tr>
+      <tr>
+        <td class="bg-light"><strong>Отчество:</strong></td>
+        <td class="pl-3">{{ object.middle_name }}</td>
+      </tr>
+      <tr>
+        <td class="bg-light"><strong>Комментарий:</strong></td>
+        <td class="pl-3">{{ object.comment }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

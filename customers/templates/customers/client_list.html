@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="mb-4">
+        <h1 class="text-center">Список ваших клиентов</h1>
+    </div>
+    <div class="mb-3">
+        <a href="{% url 'customers:create_client' %}" class="btn btn-primary">Добавить клиента</a>
+    </div>
+    <table class="table mt-4">
+        <!-- Заголовок таблицы -->
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Отчество</th>
+                <th scope="col">Почта</th>
+                <th scope="col">Действия</th>
+            </tr>
+        </thead>
+        <!-- Тело таблицы -->
+        <tbody>
+            {% for object in object_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ object.last_name }}</td>
+                <td>{{ object.first_name }}</td>
+                <td>{{ object.middle_name }}</td>
+                <td>{{ object.client_email }}</td>
+                <td>
+                    <a href="{% url 'customers:client_detail' object.pk %}" class="btn btn-primary btn-sm">Просмотреть</a>
+                    <a href= "{% url 'customers:update_client' object.pk %}" class="btn btn-secondary btn-sm">Редактировать</a>
+                    <a href="{% url 'customers:delete_сlient' object.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div></div>
+{% endblock %}

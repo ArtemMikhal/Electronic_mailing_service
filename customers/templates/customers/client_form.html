@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-4">
+      {% if object %}
+      <h1 class="text-center">Редактирование клиента</h1>
+      {% else %}
+      <h1 class="text-center">Добавление клиента</h1>
+      {% endif %}
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="id_client_email"><strong>Почта:</strong></label>
+          <input type="email" class="form-control form-control-sm" id="id_client_email" name="client_email" style="width: 80%;" value="{{ object.client_email }}">
+        </div>
+
+        <div class="form-group">
+          <label for="id_last_name"><strong>Фамилия:</strong></label>
+          <input type="text" class="form-control form-control-sm" id="id_last_name" name="last_name" style="width: 80%;" value="{{ object.last_name }}">
+        </div>
+
+        <div class="form-group">
+          <label for="id_first_name"><strong>Имя:</strong></label>
+          <input type="text" class="form-control form-control-sm" id="id_first_name" name="first_name" style="width: 80%;" value="{{ object.first_name }}">
+        </div>
+
+        <div class="form-group">
+          <label for="id_middle_name"><strong>Отчество:</strong></label>
+          <input type="text" class="form-control form-control-sm" id="id_middle_name" name="middle_name" style="width: 80%;" value="{{ object.middle_name }}">
+        </div>
+
+        <div class="form-group">
+          <label for="id_comment"><strong>Комментарий:</strong></label>
+          <textarea class="form-control form-control-sm" id="id_comment" name="comment" style="width: 80%;">{{ object.comment }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">
+          {% if object %}
+          Сохранить
+          {% else %}
+          Создать
+          {% endif %}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
