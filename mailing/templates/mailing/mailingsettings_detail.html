@@ -1,0 +1,74 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="mb-4">
+    <h1 class="text-center">Рассылка - "{{ object.name }}"</h1>
+    <a href="{% url 'mailing:mailing_list' %}" class="btn btn-link">Вернуться к списку рассылок</a>
+  </div>
+  <table class="table table-bordered">
+    <body>
+    <tr>
+      <td class="bg-light"><strong>Название рассылки:</strong></td>
+      <td class="pl-3">{{ object.name }}</td>
+    </tr>
+    <tr>
+      <td class="bg-light"><strong>Периодичность:</strong></td>
+      <td class="pl-3">{{ object.get_frequency_display }}</td>
+    </tr>
+    <tr>
+      <td class="bg-light"><strong>Время рассылки:</strong></td>
+      <td class="pl-3">{{ object.send_time }}</td>
+    </tr>
+    <tr>
+      <td class="bg-light"><strong>Статус:</strong></td>
+      <td class="pl-3">
+        {% if object.status == 'Создано' %}
+        <span style="color: green">{{ object.status }}</span>
+        {% elif object.status == 'В процессе' %}
+        <span style="color: yellow">{{ object.status }}</span>
+        {% elif object.status == 'Завершено' %}
+        <span style="color: red">{{ object.status }}</span>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td class="bg-light"><strong>Активность:</strong></td>
+      <td class="pl-3">
+        {% if object.is_active %}
+        <span style="color: green">Рассылка активирована</span>
+        {% else %}
+        <span style="color: red">Рассылка не активирована</span>
+        {% endif %}
+      </td>
+    </tr>
+
+    <tr>
+      <td class="bg-light"><strong>Сообщение для рассылки:</strong></td>
+      <td class="pl-3">
+        {% if object.mailingmessage_set.all %}
+        <span style="color: green">&#10004;</span>
+        <a href="{% url 'messaging:messaging_detail' object.mailingmessage_set.first.pk %}" class="btn btn-primary btn-sm" style="background-color: #90EE90; border-color: #90EE90; color: blue; margin-left: 10px;" onmouseover="this.style.opacity=0.8;" onmouseout="this.style.opacity=1;">Просмотреть письмо</a>
+        {% else %}
+        <span style="color: red;">&#10060;</span>
+        {% endif %}
+      </td>
+    </tr>
+    </tr>
+    </tr>
+    <td class="bg-light"><strong>Кому отправить:</strong></td>
+    <td class="pl-3">
+      {% for client in object.clients.all %}
+      <span style="color: green">{{ client.last_name }} {{ client.first_name }}</span>
+      <span style="color: blue">{{ client.client_email }}</span><br>
+      {% endfor %}
+    </td>
+    </tr>
+    </body>
+  </table>
+  <div class="text-center mt-4">
+    <a href="{% url 'mailing:update_mailing' object.pk %}" class="btn btn-primary">Редактировать</a>
+    <a href="{% url 'mailing:delete_mailing' object.pk %}" class="btn btn-danger">Удалить</a>
+  </div>
+</div>
+{% endblock %}

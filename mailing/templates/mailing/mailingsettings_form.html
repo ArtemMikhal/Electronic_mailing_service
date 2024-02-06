@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-4">
+      {% if object %}
+      <h1 class="text-center">Редактирование рассылки</h1>
+      {% else %}
+      <h1 class="text-center">Создание рассылки</h1>
+      {% endif %}
+    </div>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="mt-3">
+      <button type="submit" name="submit" class="btn btn-success">
+        {% if object %}
+        Сохранить
+        {% else %}
+        Создать
+        {% endif %}
+      </button>
+      <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

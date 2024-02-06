@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <form method="POST" enctype="multipart/form-data" id="mailing-activate-form">
+    <div class="mb-4">
+      {% if object.is_active %}
+      <h1 class="text-center">Деактивировать: "{{ object.name }}"</h1>
+      {% else %}
+      <h1 class="text-center">Активировать рассылку: "{{ object.name }}"</h1>
+      {% endif %}
+    </div>
+      {% csrf_token %}
+      {% if object.is_active %}
+      <button type="submit" name="is_active" value="False" class="btn btn-danger">Да</button>
+      {% else %}
+      <button type="submit" name="is_active" value="True" class="btn btn-success">Да</button>
+      {% endif %}
+      <a href="{% url 'mailing:mailing_list' %}" class="btn btn-primary">Нет</a>
+  </form>
+</div>
+{% endblock %}

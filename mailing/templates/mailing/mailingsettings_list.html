@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="mb-4">
+        <h1 class="text-center">Список ваших рассылок</h1>
+    </div>
+    <div class="mb-3">
+        <a href="{% url 'mailing:create_mailing' %}" class="btn btn-primary">Добавить рассылку</a>
+        <a href="{% url 'messaging:create_messaging' %}" class="btn btn-primary" style="background-color: #90EE90; border-color: #90EE90; color: blue;" onmouseover="this.style.opacity=0.8;" onmouseout="this.style.opacity=1;">Создать письмо</a>
+    </div>
+    <table class="table mt-4">
+        <!-- Заголовок таблицы -->
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название рассылки</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Периодичность</th>
+                <th scope="col">Время рассылки</th>
+                <th scope="col">Письмо</th>
+                <th scope="col">Действия</th>
+            </tr>
+        </thead>
+        <!-- Тело таблицы -->
+        <tbody>
+            {% for object in object_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><strong><span style="color: blue;">{{ object.name }}</span></strong></td>
+                <td>
+                    {% if object.status == 'Создано' %}
+                    <span style="color: green">{{ object.status }}</span>
+                    {% elif object.status == 'В процессе' %}
+                    <span style="color: yellow">{{ object.status }}</span>
+                    {% elif object.status == 'Завершено' %}
+                    <span style="color: red">{{ object.status }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ object.get_frequency_display }}</td>
+                <td>{{ object.send_time }}</td>
+                <td>
+                    {% if object.mailingmessage_set.all %}
+                    <span style="color: green;">&#10004;</span> <!-- Зеленая галочка -->
+                    {% else %}
+                    <span style="color: red;">&#10060;</span> <!-- Красный прочерк -->
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'mailing:mailing_detail' object.pk %}" class="btn btn-primary btn-sm">Детали рассылки</a>
+                    {% if object.mailingmessage_set.all %}
+                        {% if object.is_active %}
+                        <a href="{% url 'mailing:activate_mailing' object.pk %}" class="btn btn-primary btn-sm text-white font-weight-bold border border-danger bg-danger"
+                           onmouseover="this.style.opacity=0.8;" onmouseout="this.style.opacity=1;">Остановить</a>
+                        {% else %}
+                        <a href="{% url 'mailing:activate_mailing' object.pk %}" class="btn btn-primary btn-sm text-dark font-weight-bold border border-warning bg-warning"
+                           onmouseover="this.style.opacity=0.8;" onmouseout="this.style.opacity=1;">Активировать</a>
+                        {% endif %}
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="mb-4">
+    <h1 class="text-center">Удаление сообщения</h1>
+  </div>
+  <form method="POST">
+    {% csrf_token %}
+    <p>Хотите удалить сообщение "{{ object.subject }}"?</p>
+    <button type="submit" class="btn btn-danger">Подтвердить</button>
+    <a href="{% url 'messaging:messaging_detail' object.pk %}" class="btn btn-success">Отменить</a>
+  </form>
+{% endblock %}
