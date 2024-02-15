@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="mb-4">
+    <h1 class="text-center">Пользователь - "{{ object.email }}"</h1>
+  </div>
+  <table class="table table-bordered">
+    <body>
+    <tr>
+      <td class="bg-light"><strong>Пользователь:</strong></td>
+      <td class="pl-3">{{ object.email }}</td>
+    </tr>
+    <tr>
+      <td class="bg-light"><strong>Авторизован:</strong></td>
+      <td class="pl-3">{{ object.is_verified }}</td>
+    </tr>
+    <tr>
+      <td class="bg-light"><strong>Заблокирован:</strong></td>
+      <td class="pl-3">{{ object.is_blocked }}</td>
+    </body>
+  </table>
+  <div class="text-center mt-4">
+    {% if object.is_blocked %}
+    <a href="{% url 'users:user_blocked' object.pk %}" class="btn btn-danger btn-sm" style="background-color: green; color: white; border-color: green;">Разблокировать</a>
+    {% else %}
+    <a href="{% url 'users:user_blocked' object.pk %}" class="btn btn-danger btn-sm">Заблокировать</a>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

@@ -25,9 +25,9 @@
             {% for object in object_list %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ object.last_name }}</td>
-                <td>{{ object.first_name }}</td>
-                <td>{{ object.middle_name }}</td>
+                <td style="color: blue;">{{ object.last_name }}</td>
+                <td style="color: blue;">{{ object.first_name }}</td>
+                <td style="color: blue;">{{ object.middle_name }}</td>
                 <td>{{ object.client_email }}</td>
                 <td>
                     <a href="{% url 'customers:client_detail' object.pk %}" class="btn btn-primary btn-sm">Просмотреть</a>

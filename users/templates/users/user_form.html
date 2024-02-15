@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6">
+                <form method="POST" enctype="multipart/form-data" class="border p-4">
+                    <h2 class="card-title">
+                        Профиль
+                    </h2>
+                    <div class="row mb-3">
+                        <div class="col-sm-2"></div>
+                        <hr>
+                        <div class="col-sm-10">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% if not object.is_superuser %}
+<p class="text-center mt-4">
+    <a href="{% url 'users:delete_user' object.pk %}">Удалить аккаунт</a>
+</p>
+{% endif %}
+
+{% endblock %}

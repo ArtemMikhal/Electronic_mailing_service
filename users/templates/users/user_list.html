@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="mb-4">
+        <h1 class="text-center">Список пользователей</h1>
+    </div>
+    <table class="table mt-4">
+        <!-- Заголовок таблицы -->
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Почта</th>
+                <th scope="col">id</th>
+                <th scope="col">Авторизован</th>
+                <th scope="col">Заблокирован</th>
+                <th scope="col">Действия</th>
+            </tr>
+        </thead>
+        <!-- Тело таблицы -->
+        <tbody>
+            {% for object in object_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ object.email }}</td>
+                <td>{{ object.id }}</td>
+                <td>
+                    {% if object.is_verified %}
+                    Да
+                    {% else %}
+                    Нет
+                    {% endif %}
+                </td>
+                <td>
+                    {% if object.is_blocked %}
+                    Да
+                    {% else %}
+                    Нет
+                    {% endif %}
+                </td>
+                <td>
+                    {% if object.is_superuser %}
+                        <p style="color: red;">Админ</p>
+                    {% else %}
+                        <a href="{% url 'users:users_detail' object.pk %}" class="btn btn-primary btn-sm">Просмотреть</a>
+                        {% if object.is_blocked %}
+                            <a href="{% url 'users:user_blocked' object.pk %}" class="btn btn-danger btn-sm" style="background-color: green; color: white; border-color: green;">Разблокировать</a>
+                        {% else %}
+                            <a href="{% url 'users:user_blocked' object.pk %}" class="btn btn-danger btn-sm">Заблокировать</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

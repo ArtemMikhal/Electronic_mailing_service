@@ -1,8 +1,7 @@
 from django.urls import path
-
 from messaging.views import MessagingCreateView, MessagingDetailView, MessagingDeleteView, MessagingUpdateView
-
 from messaging.apps import MessagingConfig
+
 
 app_name = MessagingConfig.name
 

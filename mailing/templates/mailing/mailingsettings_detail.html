@@ -63,12 +63,19 @@
       <span style="color: blue">{{ client.client_email }}</span><br>
       {% endfor %}
     </td>
+    <tr>
+      <td class="bg-light"><strong>Создал:</strong></td>
+      <td class="pl-3">{{ object.user }}</td>
+    </tr>
     </tr>
     </body>
   </table>
   <div class="text-center mt-4">
-    <a href="{% url 'mailing:update_mailing' object.pk %}" class="btn btn-primary">Редактировать</a>
-    <a href="{% url 'mailing:delete_mailing' object.pk %}" class="btn btn-danger">Удалить</a>
+    {% if perms.mailing.change_mailingsettings or object.user == user %}
+      <a href="{% url 'mailing:update_mailing' object.pk %}" class="btn btn-primary">Редактировать</a>
+    {% endif %}
+    {% if perms.mailing.delete_mailingsettings or object.user == user %}
+      <a href="{% url 'mailing:delete_mailing' object.pk %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
   </div>
-</div>
-{% endblock %}
+  {% endblock %}

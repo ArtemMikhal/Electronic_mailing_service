@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+
 from django.db import models
 
 from customers.models import Client
@@ -23,10 +25,14 @@ class MailingSettings(models.Model):
     frequency = models.CharField(max_length=20, choices=TIME_CHOICES, verbose_name='Периодичность рассылки')
     status = models.CharField(max_length=20, verbose_name='Статус рассылки', default='Создано')
     is_active = models.BooleanField(default=False, verbose_name='Активность рассылки')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None, null=True,
+                             verbose_name='пользователь')
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
-
+        permissions = [
+            ('disable_mailings', 'Может отключать рассылки'),
+        ]
     def __str__(self):
         return self.name
 
@@ -37,3 +43,6 @@ class MailingSettings(models.Model):
             self.status = 'Завершено'
         super().save(*args, **kwargs)
 
+    @staticmethod
+    def get_total_mailings():
+        return MailingSettings.objects.count()

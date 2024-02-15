@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary btn-dark">
+                            {% if object %}
+                                Сохранить
+                            {% else %}
+                                Создать
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

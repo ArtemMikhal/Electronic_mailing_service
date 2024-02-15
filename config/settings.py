@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'messaging',
     'mailing_logs',
     'blog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'users.middleware.BlockUserMiddleware',  # Блокировка
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -147,13 +149,29 @@ MEDIA_ROOT = Path(BASE_DIR) / 'media'
 
 TIME_ZONE = 'Europe/Moscow'
 
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'amikhalchenkov93@gmail.com'
-EMAIL_HOST_PASSWORD = 'uqde gvka kyyu nxyj'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED') == '1'
+
+if CACHE_ENABLED is True:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+        }
+    }
+
 
 
 

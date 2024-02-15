@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        Просмотры: {{ object.views }}
+        <hr>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="mb-3">{{ object.title }}</h3>
+            </div>
+        </div>
+        <hr>
+        {% if object.image %}
+        <div class="col-md-7 offset-md-2 text-center">
+            <img src="{{ object.image.url }}" alt="Article Image" width="720" height="480">
+        </div>
+        <div class="row justify-content-center">
+            <p class="mb-3" style="font-weight: normal; text-align: justify;">
+                <span style="text-indent: 1.25cm;">{{ object.content|linebreaksbr }}</span>
+            </p>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                {% if user.is_authenticated and user == object.author %}
+                <a href="{% url 'blog:edit' object.id %}" class="btn btn-primary" style="background-color: purple; color: white; border-color: purple;">Редактировать</a>
+                <a href="{% url 'blog:delete' object.id %}" class="btn btn-primary" style="background-color: gray; color: white; border-color: gray;">Удалить</a>
+                {% endif %}
+
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <a href="{% url 'blog:blog_list' %}" style="color: blue;">Вернуться к списку статей</a>
+                </div>
+                <hr>
+                <p class="mb-1" style="color: gray; font-size: smaller;">{{ object.publication_date }}</p>
+                <p class="mb-1" style="color: gray; font-size: smaller;">Автор: {{ object.author }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

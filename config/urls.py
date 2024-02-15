@@ -26,8 +26,10 @@ urlpatterns = [
     path('customers/', include('customers.urls', namespace='customers')),
     path('mailing/', include('mailing.urls', namespace='mailing')),
     path('messaging/', include('messaging.urls', namespace='messaging')),
+    path('users/', include('users.urls', namespace='users')),
+    path('mailing_logs/', include('mailing_logs.urls', namespace='mailing_logs')),
+    path('blog/', include('blog.urls', namespace='blog')),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

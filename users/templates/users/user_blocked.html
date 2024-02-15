@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <form method="POST" enctype="multipart/form-data" id="mailing-activate-form">
+    <div class="mb-4">
+      {% if object.is_blocked %}
+      <h1 class="text-center">Разблокировать пользователя: "{{ object.email }}"</h1>
+      {% else %}
+      <h1 class="text-center">Заблокировать пользователяу: "{{ object.email }}"</h1>
+      {% endif %}
+    </div>
+      {% csrf_token %}
+      {% if object.is_blocked %}
+      <button type="submit" name="is_blocked" value="False" class="btn btn-danger">Да</button>
+      {% else %}
+      <button type="submit" name="is_blocked" value="True" class="btn btn-success">Да</button>
+      {% endif %}
+      <a href="{% url 'users:users_detail' object.pk %}" class="btn btn-primary">Нет</a>
+  </form>
+</div>
+{% endblock %}
+
